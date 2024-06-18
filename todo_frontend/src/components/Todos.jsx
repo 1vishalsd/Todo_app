@@ -1,13 +1,9 @@
-import React from "react";
-
-function Todos() {
+export function Todos() {
   return (
     <div>
-      <h1>Go to gym</h1>
-      <h2>You need to go to the Gym</h2>
-      <h3>marked is done</h3>
+      <h1>go to the gym</h1>
+      <h2>you need to do gym </h2>
+      <button> mark is done</button>
     </div>
   );
 }
-
-export default Todos;
