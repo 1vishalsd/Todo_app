@@ -1,9 +1,10 @@
 const express = require("express");
 const { createTodo, updateTodo } = require("./types");
+const { todo } = require("./db");
 const app = express();
 app.use(express.json());
 
-app.post("/todo", function (req, res) {
+app.post("/todo", async function (req, res) {
   const createPaylaod = req.body;
   const parsePayload = createTodo.safeParse(createPaylaod);
   if (!parsePayload.success) {
@@ -12,9 +13,25 @@ app.post("/todo", function (req, res) {
     });
     return;
   }
+  await todo.create({
+    title: createPaylaod.title,
+    description: createPaylaod.description,
+    completed: false,
+  });
+  res.json({
+    msg: "Todo is Created",
+  });
 });
-app.get("/todos", function (req, res) {});
-app.put("/completed", function (req, res) {
+app.get("/todos", async function (req, res) {
+  const todos = await todo.find({});
+  title: "go to gym";
+  description: "you need go to gym";
+
+  res.json({
+    todos,
+  });
+});
+app.put("/completed", async function (req, res) {
   const updatePayload = req.body;
   const parsePayload = updateTodo.safeParse(updatePayload);
   if (!parsePayload.success) {
@@ -23,4 +40,15 @@ app.put("/completed", function (req, res) {
     });
     return;
   }
+  await todo.update(
+    {
+      _id: req.body,
+    },
+    {
+      completed: true,
+    }
+  );
+  res.json({
+    msg: "Todo marked as completed",
+  });
 });

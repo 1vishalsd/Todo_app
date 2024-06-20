@@ -5,7 +5,7 @@ mongoose.connect(
 );
 const todoSchema = mongoose.Schema({
   title: String,
-  descripation: String,
+  description: String,
   completed: booleand,
 });
 
